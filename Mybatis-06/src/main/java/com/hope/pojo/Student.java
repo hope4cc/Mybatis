@@ -8,7 +8,7 @@ import lombok.Data;
  * 邮箱：1602774287@qq.com
  * 微信：hope4cc
  * 创建时间：2022/10/16-16:40
- * 描述：
+ * 描述：多对一
  */
 @Data
 public class Student {

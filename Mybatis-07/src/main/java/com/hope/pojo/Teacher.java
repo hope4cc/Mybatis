@@ -10,7 +10,7 @@ import java.util.List;
  * 邮箱：1602774287@qq.com
  * 微信：hope4cc
  * 创建时间：2022/10/16-16:40
- * 描述：
+ * 描述：一对多处理
  */
 @Data
 public class Teacher {

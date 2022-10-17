@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!--configuration 核心配置文件-->
+<configuration>
+<!--    引入外部配置文件-->
+    <properties resource="db.properties" />
+
+
+    <settings>
+        <!--        标准的日志工厂实现-->
+<!--        <setting name="logImpl" value="STDOUT_LOGGING"/>-->
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
+
+    <typeAliases>
+        <typeAlias type="com.hope.pojo.Student" alias="Student"></typeAlias>
+        <typeAlias type="com.hope.pojo.Teacher" alias="Teacher"></typeAlias>
+    </typeAliases>
+
+
+    <!--    environment 元素体中包含了事务管理和连接池的配置-->
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+
+    <!--    mappers 元素则包含了一组映射器（mapper），
+            这些映射器的 XML 映射文件包含了 SQL 代码和映射定义信息。-->
+    <!--   每一个Mapper.xml都需要在mybatis核心配置文件中注册 -->
+    <mappers>
+        <mapper resource="mapper/StudentMapper.xml"/>
+        <mapper resource="mapper/TeacherMapper.xml"/>
+    </mappers>
+</configuration>

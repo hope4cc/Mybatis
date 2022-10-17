@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace 绑定一个对应的Dao接口 / mapper接口-->
+<mapper namespace="com.hope.mapper.UserMapper">
+
+
+<!--   resultType sql语句执行的返回值-->
+<!--   parameterType 参数类型-->
+
+<!--    结果集映射-->
+<!--    column 数据库的字段-->
+<!--    property 实体类的属性-->
+    <resultMap id="UserMap" type="User">
+        <result column="id" property="id"></result>
+        <result column="name" property="name"></result>
+        <result column="pwd" property="password"></result>
+    </resultMap>
+
+    <select id="getById" resultMap="UserMap" parameterType="int">
+        select * from user where id=#{id}
+    </select>
+
+
+    <select id="getuserByLimit"  parameterType="map" resultMap="UserMap">
+        select * from user limit #{startIndex},#{pageSize}
+    </select>
+
+</mapper>

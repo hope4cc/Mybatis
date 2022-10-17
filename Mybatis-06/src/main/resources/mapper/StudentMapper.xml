@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--configuration 核心配置文件-->
+<mapper namespace="com.hope.mapper.StudentMapper">
+
+<!--    安装结果嵌套处理-->
+    <resultMap id="StudentTeacher2" type="Student">
+        <result property="id" column="id"></result>
+        <result property="name" column="name"></result>
+        <association property="teacher" javaType="Teacher">
+            <result property="name" column="name"></result>
+        </association>
+     </resultMap>
+
+    <select id="getStudent2" resultMap="StudentTeacher2">
+        select s.id,s.name,t.name
+        from student s,teacher t
+        where s.tid=t.id;
+    </select>
+
+
+
+
+<!--    ``````````````````````````````````````````````````-->
+<!--
+    思路：
+        1、查询所有的学生
+        2、根据查询出来的学生的tid,寻找对应的老师
+-->
+    <resultMap id="StudentTeacher" type="Student">
+        <id property="id" column="id"></id>
+        <result property="name" column="name"></result>
+        <association property="teacher" column="tid" javaType="Teacher" select="getTeacher"></association>
+    </resultMap>
+
+    <select id="getStudentList" resultMap="StudentTeacher">
+        select * from student
+    </select>
+
+    <select id="getTeacher" resultType="Teacher">
+        select * from teacher where id=#{id}
+    </select>
+
+
+
+
+
+
+</mapper>

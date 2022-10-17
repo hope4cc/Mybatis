@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--configuration 核心配置文件-->
+<mapper namespace="com.hope.mapper.TeacherMapper">
+
+    <select id="getTeacherList" resultType="Teacher">
+        select * from teacher
+    </select>
+
+    <!--
+        复杂的属性，我们需要单独处理，对象：association 集合：collection
+        javaType="" 指定属性的类型！
+        集合中的泛型信息，我们使用ofType获取
+-->
+    <resultMap id="TeacherStudent" type="Teacher">
+        <result property="id" column="tid"></result>
+        <result property="name" column="tname"></result>
+        <collection property="studentList" ofType="Student">
+            <result property="id" column="sid"></result>
+            <result property="name" column="sname"></result>
+            <result property="tid" column="tid"></result>
+        </collection>
+    </resultMap>
+    
+    <select id="getTeacher" resultMap="TeacherStudent" parameterType="int">
+        select s.id sid,s.name sname,t.name tname,t.id tid
+        from student s,teacher t
+        where s.tid=t.id and t.id=#{tid}
+    </select>
+
+<!-- ============================================================================= -->
+
+    <select id="getTeacher2" resultMap="TeacherStudent2">
+        select * from teacher where id=#{tid}
+    </select>
+
+    <resultMap id="TeacherStudent2" type="Teacher">
+        <collection property="studentList" javaType="ArrayList" ofType="Student" select="getStudentByTeacherId" column="id"></collection>
+    </resultMap>
+
+    <select id="getStudentByTeacherId" resultType="Student">
+        select * from student where tid=#{tid}
+    </select>
+
+</mapper>
